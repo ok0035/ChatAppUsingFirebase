@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--  채팅앱인데 카드뷰가 필요가 있으려나?
+      radius를 주지 말아야겠다. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@android:drawable/ic_dialog_alert"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivProfile"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:background="@drawable/speech_bubble_right"
+            app:layout_constraintBottom_toBottomOf="@+id/tvName"
+            app:layout_constraintEnd_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toTopOf="@+id/tvName"
+            app:layout_constraintWidth_max="wrap"
+            app:layout_constraintWidth_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
