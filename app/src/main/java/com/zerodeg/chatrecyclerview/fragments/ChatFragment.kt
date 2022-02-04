@@ -67,7 +67,6 @@ class ChatFragment : Fragment(), ChatInterface, View.OnClickListener, View.OnKey
                 LinearLayoutManager(this@ChatFragment.context, LinearLayoutManager.VERTICAL, false)
         }
 
-
         // Write a message to the database
 //        val database = Firebase.database
 //        val myRef = database.getReference("message")
@@ -78,6 +77,8 @@ class ChatFragment : Fragment(), ChatInterface, View.OnClickListener, View.OnKey
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+
+                Log.d(TAG, "onDataChangeForSingleValue: called")
 
                 val value = dataSnapshot.children
                 value.forEach {
@@ -153,7 +154,7 @@ class ChatFragment : Fragment(), ChatInterface, View.OnClickListener, View.OnKey
         var auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
         val uid = user?.uid
-        usersRef.child(uid.toString()).get().addOnSuccessListener {
+        usersRef.child(uid.toString()).get().addOnSuccessListener { it ->
             Log.d(TAG, "writeMessage: username -> ${it.getValue<ChatData>()!!.username}")
             val username = it.getValue<ChatData>()?.username
             val chatData = ChatData(uid, username, content)
@@ -161,8 +162,8 @@ class ChatFragment : Fragment(), ChatInterface, View.OnClickListener, View.OnKey
             val date = Date().time.toString()
             chatRef.child(date).setValue(chatData)
         }
-
     }
+
     /*
     *
     * sendMessage 메소드에는 문제가 없다. (onClick 이벤트에서는 정상작동)
@@ -182,5 +183,7 @@ class ChatFragment : Fragment(), ChatInterface, View.OnClickListener, View.OnKey
         return false
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

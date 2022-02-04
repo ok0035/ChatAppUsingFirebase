@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.zerodeg.chatrecyclerview.App
 import com.zerodeg.chatrecyclerview.R
 import com.zerodeg.chatrecyclerview.databinding.LoginFragmentBinding
 import com.zerodeg.chatrecyclerview.model.UserModel
@@ -63,9 +64,9 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         // Check auth on Fragment start
-//        auth.currentUser?.let {
-//            onAuthSuccess(it)
-//        }
+        auth.currentUser?.let {
+            onAuthSuccess(it)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -82,6 +83,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private fun signIn() {
         Log.d(TAG, "signIn")
         if (!validateForm()) {
+            Toast.makeText(App.instance.applicationContext, "유효하지 않은 형식입니다.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -106,6 +108,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private fun signUp() {
         Log.d(TAG, "signUp")
         if (!validateForm()) {
+            Toast.makeText(App.instance.applicationContext, "유효하지 않은 형식입니다.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -129,7 +132,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
     private fun onAuthSuccess(user: FirebaseUser) {
         val username = usernameFromEmail(user.email!!)
-
+        Log.d(TAG, "onAuthSuccess: $username")
         // Write new user
         writeNewUser(user.uid, username, user.email)
 
@@ -160,6 +163,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
         } else {
             binding.etPassword.error = null
         }
+
+        Log.d(TAG, "validateForm: $result")
 
         return result
     }
